@@ -52,7 +52,10 @@ public class CCTweenAlpha : CCTweener {
 
     void One(float fromAlpha, float toAlpha, float time)
     {
-        transform.UIAlpha(fromAlpha, toAlpha, time);
+        transform.UIAlpha(fromAlpha, toAlpha, time).SetComplete = () =>
+        {
+            NotifyComplete();
+        };
     }
     void Loop(float fromAlpha, float toAlpha, float time)
     {
@@ -60,7 +63,7 @@ public class CCTweenAlpha : CCTweener {
     }
     void PingPong(float fromAlpha, float toAlpha, float time)
     {
-        transform.UIAlpha(fromAlpha, toAlpha, time).SetComplete = () => { Loop(toAlpha,fromAlpha, time); };
+        transform.UIAlpha(fromAlpha, toAlpha, time).SetComplete = () => { PingPong(toAlpha, fromAlpha, time); };
     }
 
     protected override void StartValue()

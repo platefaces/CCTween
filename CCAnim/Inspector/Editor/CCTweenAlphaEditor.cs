@@ -10,25 +10,29 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 [CustomEditor(typeof(CCTweenAlpha))]
-public class CCTweenAlphaEditor : Editor
+public class CCTweenAlphaEditor : CCTweenBaseEditor
 {
 
     CCTweenAlpha alpha;
 
     void OnEnable()
     {
-        alpha = (CCTweenAlpha) target;
+        alpha = (CCTweenAlpha)target;
     }
 
-    public override void OnInspectorGUI()
+
+
+    public override void StartInspectorGUI()
     {
         EditorGUILayout.LabelField("Start Alpha :");
-        alpha.StartAlpha    = EditorGUILayout.Slider(alpha.StartAlpha, 0, 1);
-        alpha.Group.alpha   = alpha.StartAlpha;
+        alpha.StartAlpha = EditorGUILayout.Slider(alpha.StartAlpha, 0, 1);
+        alpha.Group.alpha = alpha.StartAlpha;
         EditorGUILayout.LabelField("End   Alpha :");
-        alpha.EndAlpha      = EditorGUILayout.Slider(alpha.EndAlpha, 0, 1);
-        alpha.style         = ( CCTweener.Style )EditorGUILayout.EnumPopup("Anim Type :", alpha.style);
-        alpha.durtion       = EditorGUILayout.FloatField("Anim Time :", alpha.durtion);
-        alpha.IsStartRun    = EditorGUILayout.Toggle("Is Start Run :", alpha.IsStartRun);
+        alpha.EndAlpha = EditorGUILayout.Slider(alpha.EndAlpha, 0, 1);
+        alpha.style = (CCTweener.Style)EditorGUILayout.EnumPopup("Anim Type :", alpha.style);
+        alpha.durtion = EditorGUILayout.FloatField("Anim Time :", alpha.durtion);
+        alpha.IsStartRun = EditorGUILayout.Toggle("Is Start Run :", alpha.IsStartRun);
+        alpha.Delay = EditorGUILayout.FloatField("delay：", alpha.Delay);
     }
+
 }

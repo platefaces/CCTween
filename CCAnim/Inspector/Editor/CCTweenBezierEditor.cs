@@ -10,7 +10,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 [CustomEditor(typeof(CCTweenBezier))]
-public class CCTweenBezierEditor : Editor
+public class CCTweenBezierEditor : CCTweenBaseEditor
 {
 
     CCTweenBezier bezier;
@@ -21,19 +21,6 @@ public class CCTweenBezierEditor : Editor
         bezier = (CCTweenBezier) target;
     }
 
-    public override void OnInspectorGUI()
-    {     
-        bezier.Duration   = EditorGUILayout.FloatField("动画时间 :", bezier.Duration);
-        bezier.usingPos   = EditorGUILayout.Toggle("使用坐标 ：", bezier.usingPos);
-        bezier.IsStartRun = EditorGUILayout.Toggle("开始运行", bezier.IsStartRun);
-        bezier.length     = EditorGUILayout.IntField("坐标数量 ：", bezier.length);
-        showPosition      = EditorGUILayout.Foldout(showPosition,"坐标数组 ：");
-        if(!showPosition)
-            return;
-
-        if (bezier.usingPos)  Position();
-        else                  Transfrom();
-    }
     void Transfrom()
     {
         if(bezier.length == 0)
@@ -110,5 +97,21 @@ public class CCTweenBezierEditor : Editor
                 bezier.V3Pos[i] = EditorGUILayout.Vector3Field("Potation " + (i + 1), bezier.V3Pos[i]);
 
         }
+    }
+
+    public override void StartInspectorGUI()
+    {
+        bezier.Duration = EditorGUILayout.FloatField("动画时间 :", bezier.Duration);
+        bezier.usingPos = EditorGUILayout.Toggle("使用坐标 ：", bezier.usingPos);
+        bezier.IsStartRun = EditorGUILayout.Toggle("开始运行", bezier.IsStartRun);
+        bezier.length = EditorGUILayout.IntField("坐标数量 ：", bezier.length);
+        showPosition = EditorGUILayout.Foldout(showPosition, "坐标数组 ：");
+        if (!showPosition)
+            return;
+
+        if (bezier.usingPos)
+            Position();
+        else
+            Transfrom();
     }
 }

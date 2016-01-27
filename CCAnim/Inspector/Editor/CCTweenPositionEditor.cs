@@ -9,23 +9,45 @@
 using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using System;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 
 [CustomEditor(typeof(CCTweenPosition))]
-public class CCTweenPositionEditor : Editor
+public class CCTweenPositionEditor : CCTweenBaseEditor
 {
-    private CCTweenPosition position;
+    protected CCTweenPosition _CCTarget;
 
     void OnEnable()
     {
-        position = (CCTweenPosition) target;
+        _CCTarget = (CCTweenPosition)_CCTweener;
     }
 
-    public override void OnInspectorGUI()
+
+    public override void StartInspectorGUI()
     {
-        position.FormPosition   = EditorGUILayout.Vector3Field("Start Position：", position.FormPosition);
-        position.ToPosition     = EditorGUILayout.Vector3Field("End Position：", position.ToPosition);
-        position.style          = ( CCTweener.Style )EditorGUILayout.EnumPopup("Anim Type：", position.style);
-        position.MoveTime       = EditorGUILayout.FloatField("Anim Play Time :", position.MoveTime);
-        position.IsStartRun     = EditorGUILayout.Toggle("Is Start Play：", position.IsStartRun);
+        EditorGUILayout.BeginHorizontal();
+        _CCTarget.FormPosition = EditorGUILayout.Vector3Field("Start Position：", _CCTarget.FormPosition);
+        if (GUILayout.Button("复制坐标", new GUILayoutOption[] { GUILayout.Width(80) }))
+        {
+            _CCTarget.FormPosition = _CCTarget.MyPosition;
+        }
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        _CCTarget.ToPosition = EditorGUILayout.Vector3Field("End Position：", _CCTarget.ToPosition);
+        if (GUILayout.Button("复制坐标", new GUILayoutOption[] { GUILayout.Width(80) }))
+        {
+            _CCTarget.ToPosition = _CCTarget.MyPosition;
+        }
+        EditorGUILayout.EndHorizontal();
+
+        _CCTarget.style = (CCTweener.Style)EditorGUILayout.EnumPopup("Anim Type：", _CCTarget.style);
+        _CCTarget.MoveTime = EditorGUILayout.FloatField("Anim Play Time :", _CCTarget.MoveTime);
+        _CCTarget.IsStartRun = EditorGUILayout.Toggle("Is Start Play：", _CCTarget.IsStartRun);
+        _CCTarget.Delay = EditorGUILayout.FloatField("delay：", _CCTarget.Delay);
     }
+
 }

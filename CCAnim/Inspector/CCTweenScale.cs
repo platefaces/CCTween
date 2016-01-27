@@ -48,7 +48,10 @@ public class CCTweenScale : CCTweener {
     }
     void One(Vector3 from, Vector3 to)
     {
-        myTransform.Scale(from, to, ScaleTime);
+        myTransform.Scale(from, to, ScaleTime).SetComplete = () =>
+        {
+            NotifyComplete();
+        };
     }
     void Loop(Vector3 from, Vector3 to)
     {

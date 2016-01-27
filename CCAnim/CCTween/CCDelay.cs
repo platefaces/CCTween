@@ -20,7 +20,7 @@ public class CCDelay : CCAction {
             _duration = time
         };
     }
-    public delegate void OnAction(Transform tr, params object[] obj);
+    public delegate void OnAction(CCAction tr, params object[] obj);
 
     private  OnAction MyOnAction; 
     private  object[] Params { get; set; }
@@ -39,7 +39,7 @@ public class CCDelay : CCAction {
             MyAction();  
         }
         if (MyOnAction != null)
-            MyOnAction(_target, Params);
+            MyOnAction(this, Params);
     }
   
 }
